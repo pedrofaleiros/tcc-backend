@@ -23,7 +23,6 @@ class QuestionDTO {
 			image_url: this.image_url,
 			content: this.content,
 			level: this.level,
-			alternatives: []
 		})
 	}
 
