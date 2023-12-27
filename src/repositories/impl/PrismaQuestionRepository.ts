@@ -34,10 +34,15 @@ class PrismaQuestionRepository implements QuestionRepository {
 	}
 
 	async listQuestionsByLevel(level: number): Promise<QuestionResponse[]> {
-		//TODO: converter do prisma para QuestionResponse
 		const response = await prismaClient.question.findMany({
-			
-			include: {
+			where: {
+				level: level
+			},
+			select: {
+				id: true,
+				content: true,
+				level: true,
+				image_url: true,
 				alternatives: {
 					select: {
 						id: true,
@@ -47,8 +52,8 @@ class PrismaQuestionRepository implements QuestionRepository {
 				}
 			}
 		})
-		console.log(response)
-		return []
+
+		return response
 	}
 }
 

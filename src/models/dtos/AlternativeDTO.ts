@@ -28,7 +28,7 @@ class AlternativeDTO {
 
 	static fromRequestBody(reqBody: any): AlternativeDTO {
 		if (!reqBody.text) throw new Error('Text is required')
-		if (!reqBody.value) throw new Error('Value is required')
+		if (reqBody.value == undefined) throw new Error('Value is required')
 		if (!reqBody.question_id) throw new Error('QuestionId is required')
 
 		return new AlternativeDTO({

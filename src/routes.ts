@@ -2,9 +2,11 @@ import { Router } from "express";
 import { UserController } from "./controllers/UserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { QuestionController } from "./controllers/QuestionController";
+import { AlternativeController } from "./controllers/AlternativeController";
 
 const userController = new UserController()
 const questionController = new QuestionController()
+const alternativeController = new AlternativeController()
 
 const router = Router()
 
@@ -15,8 +17,13 @@ router.post('/auth', userController.authUser)
 router.post('/question', isAuthenticated, questionController.createQuestion)
 router.get('/questions', isAuthenticated, questionController.listQuestionsByLevel)
 
+router.post('/alternative', isAuthenticated, alternativeController.createAlternative)
+
 router.get('/', (req, res) => {
 	res.json({ status: "Ok" })
 })
+
+
+router.post('/completequestion', isAuthenticated, questionController.createCompleteQuestion)
 
 export { router }

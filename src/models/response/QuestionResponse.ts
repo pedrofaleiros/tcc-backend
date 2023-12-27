@@ -1,4 +1,4 @@
-import { AlternativeResponse } from "./AlternativeResopnse"
+import { AlternativeResponse } from "./AlternativeResponse"
 
 interface Params {
 	id: string | null
