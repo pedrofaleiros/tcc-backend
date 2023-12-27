@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
     "build": "tsc",
-    "start": "tsc && node build/index.js"
+    "start": "tsc && node build/index.js",
+    "format": "python formatQuestion.py"
   },
   "author": "pedrofaleiros",
   "license": "ISC",
