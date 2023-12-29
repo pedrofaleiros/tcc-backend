@@ -11,13 +11,12 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(uuid())
-  fullname   String
-  username   String    @unique
-  email      String    @unique
-  password   String
-  created_at DateTime? @default(now())
-  updated_at DateTime? @default(now())
+  id String @id @default(uuid())
+
+  fullname String
+  username String @unique
+  email    String @unique
+  password String
 
   answered_questions AnswerQuestion[]
 
@@ -25,23 +24,29 @@ model User {
 }
 
 model AnswerQuestion {
-  id          String   @id @default(uuid())
-  tries       Int
-  correct     Boolean
-  user_id     String
-  question_id String
-  user        User     @relation(fields: [user_id], references: [id])
-  question    Question @relation(fields: [question_id], references: [id])
+  id      String  @id @default(uuid())
+  tries   Int
+  correct Boolean
+
+  user_id        String
+  question_id    String
+  alternative_id String
+
+  user        User        @relation(fields: [user_id], references: [id])
+  question    Question    @relation(fields: [question_id], references: [id])
+  alternative Alternative @relation(fields: [alternative_id], references: [id])
 
   @@map("answerquestions")
 }
 
 model Question {
-  id                 String           @id @default(uuid())
-  image_url          String?
-  content            String
-  level              Int
-  alternatives       Alternative[]
+  id String @id @default(uuid())
+
+  image_url    String?
+  content      String
+  level        Int
+  alternatives Alternative[]
+
   answered_questions AnswerQuestion[]
 
   @@map("questions")
@@ -53,6 +58,8 @@ model Alternative {
   value       Boolean
   question_id String
   question    Question @relation(fields: [question_id], references: [id])
+
+  answered_questions AnswerQuestion[]
 
   @@map("alternatives")
 }
