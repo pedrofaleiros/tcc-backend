@@ -3,9 +3,8 @@ import { AlternativeResponse } from "../models/response/AlternativeResponse"
 import { QuestionResponse } from "../models/response/QuestionResponse"
 
 interface AlternativeRepository {
-	createAlternative(alternative: AlternativeEntity): Promise<string>
-	getQuestionAlternatives(question_id: string): Promise<Array<AlternativeResponse>>
-	questionHasTrueAlternative(question_id: string): Promise<boolean>
+	addAlternatives(alternatives: AlternativeEntity[]): Promise<string>
+	createAlternative(alternative: AlternativeEntity): Promise<void>
 }
 
 export { AlternativeRepository }

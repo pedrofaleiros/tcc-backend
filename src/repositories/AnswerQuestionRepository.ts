@@ -1,0 +1,3 @@
+interface AnswerQuestionRepository {
+	// answerQuestion()
+}

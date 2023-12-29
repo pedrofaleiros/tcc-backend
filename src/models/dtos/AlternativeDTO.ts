@@ -3,13 +3,13 @@ import { AlternativeEntity } from "../entities/AlternativeEntity"
 interface Params {
 	text: string
 	value: boolean
-	question_id: string
+	question_id: string | null
 }
 
 class AlternativeDTO {
 	text: string
 	value: boolean
-	question_id: string
+	question_id: string | null
 
 	constructor(params: Params) {
 		this.text = params.text
@@ -17,12 +17,12 @@ class AlternativeDTO {
 		this.question_id = params.question_id
 	}
 
-	toEntity(): AlternativeEntity {
+	toEntity(question_id: string): AlternativeEntity {
 		return new AlternativeEntity({
 			id: null,
 			text: this.text,
 			value: this.value,
-			question_id: this.question_id,
+			question_id: this.question_id ?? question_id,
 		})
 	}
 

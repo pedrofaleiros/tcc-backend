@@ -1,3 +1,4 @@
+import { AlternativeDTO } from "../models/dtos/AlternativeDTO"
 import { QuestionDTO } from "../models/dtos/QuestionDTO"
 import { QuestionResponse } from "../models/response/QuestionResponse"
 

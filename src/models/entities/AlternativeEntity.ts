@@ -1,3 +1,5 @@
+import { AlternativeDTO } from "../dtos/AlternativeDTO"
+
 interface Params {
 	id: string | null
 	text: string
@@ -8,7 +10,7 @@ interface Params {
 class AlternativeEntity {
 	id: string | null
 	text: string
-	value: boolean	
+	value: boolean
 	question_id: string
 
 	constructor(params: Params) {
@@ -16,6 +18,14 @@ class AlternativeEntity {
 		this.text = params.text
 		this.value = params.value
 		this.question_id = params.question_id
+	}
+
+	static fromListDTO(alternatives: AlternativeDTO[], question_id: string): AlternativeEntity[] {
+		const entities: AlternativeEntity[] = []
+		alternatives.forEach((alternative) => {
+			entities.push(alternative.toEntity(question_id))
+		})
+		return entities
 	}
 }
 
