@@ -12,7 +12,7 @@ class AnswerQuestionServiceImpl implements AnswerQuestionService {
 		this.repository = new PrismaAnswerQuestionRepository()
 	}
 
-	async answerQuestion(answerQuestion: AnswerQuestionDTO): Promise<string> {
+	async answerQuestion(answerQuestion: AnswerQuestionDTO): Promise<AnswerQuestionResponse> {
 		//TODO: validacoes
 		const response = await this.repository.answerQuestion(answerQuestion.toEntity())
 		return response

@@ -17,13 +17,13 @@ class AnswerQuestionController {
 		const user_id = req.user_id
 		const answerQuestion = AnswerQuestionDTO.fromRequestBody(req.body, user_id)
 		const response = await this.service.answerQuestion(answerQuestion)
-		return res.json({ status: response })
+		return res.json({ response: response })
 	}
 
 	async getUserAnsweredQuestions(req: Request, res: Response) {
 		const user_id = req.user_id
 		const response = await this.service.listUserAnsweredQuestions(user_id)
-		return res.json({ answered: response })
+		return res.json({ response: response })
 	}
 
 	//TODO: getUserCorrectAnsweredQuestions
