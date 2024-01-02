@@ -6,6 +6,7 @@ import { UserService } from "../UserService";
 import { validateUser } from "../../utils/validateUser";
 import { getJWT } from "../../utils/getJWT";
 import prismaClient from "../../prisma/PrismaClient";
+import { UserResponse } from "../../models/response/UserResponse";
 
 class UserServiceImpl implements UserService {
 	repository: UserRepository
@@ -14,7 +15,7 @@ class UserServiceImpl implements UserService {
 		this.repository = new UserRepositoryImpl()
 	}
 
-	async authUser(username: string | null, password: string | null): Promise<string> {
+	async authUser(username: string | null, password: string | null): Promise<UserResponse> {
 		if (username == null || password == null) {
 			throw new Error("Invalid request");
 		}
@@ -24,7 +25,12 @@ class UserServiceImpl implements UserService {
 		const passwordMathes = await compare(password, user.password)
 		if (passwordMathes) {
 			const token = getJWT(user)
-			return token
+			return new UserResponse({
+				fullname: user.fullname,
+				username: user.username,
+				email: user.email,
+				token: token,
+			})
 		}
 		throw new Error("Wrong password");
 	}

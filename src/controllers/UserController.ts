@@ -27,7 +27,7 @@ class UserController {
 
 		const response = await this.service.authUser(username, password)
 
-		return res.json({ token: response })
+		return res.json({ data: response })
 	}
 
 	async listAllUsers(req: Request, res: Response) {
