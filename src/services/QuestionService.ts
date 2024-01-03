@@ -6,6 +6,7 @@ interface QuestionService {
 	createQuestion(question: QuestionDTO): Promise<string>
 	deleteQuestion(question_id: string): Promise<string>
 	listQuestionsByLevel(level: any): Promise<Array<QuestionResponse>>
+	listQuestionsByCategory(category_id: string): Promise<Array<QuestionResponse>>
 }
 
 export { QuestionService }

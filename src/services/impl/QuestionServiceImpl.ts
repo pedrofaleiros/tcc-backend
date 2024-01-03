@@ -13,9 +13,21 @@ class QuestionServiceImpl implements QuestionService {
 		this.repository = new PrismaQuestionRepository()
 	}
 
+	async listQuestionsByCategory(category_id: string): Promise<QuestionResponse[]> {
+		if (category_id == null || !await this.repository.findCategory(category_id)) {
+			throw new Error("Categoria invalida")
+		}
+		const response = await this.repository.listQuestionsByCategory(category_id)
+		return response
+	}
+
 	async createQuestion(question: QuestionDTO): Promise<string> {
 		if (question.content.length < 3 || question.content.length > 100) throw new Error("Conteudo deve ter entre 3 e 100 caracteres")
 		if (question.level < 0 || question.level > 10) throw new Error("Nivel deve estar entre 1 e 10")
+
+		if (question.category_id != null && !await this.repository.findCategory(question.category_id)) {
+			throw new Error("Categoria invalida")
+		}
 
 		const createdQuestionId = await this.repository.createQuestion(question.toEntity())
 

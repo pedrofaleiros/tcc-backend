@@ -9,12 +9,20 @@ class QuestionController {
 	constructor() {
 		this.service = new QuestionServiceImpl()
 		this.listQuestionsByLevel = this.listQuestionsByLevel.bind(this)
+		this.listQuestionsByCategory = this.listQuestionsByCategory.bind(this)
 		this.createQuestion = this.createQuestion.bind(this)
 	}
+
 	async listQuestionsByLevel(req: Request, res: Response) {
 		const level = req.query.level
 		const response = await this.service.listQuestionsByLevel(level)
-		return res.json({ data: response })
+		return res.json({ questions: response })
+	}
+
+	async listQuestionsByCategory(req: Request, res: Response) {
+		const category_id = req.query.category_id as string
+		const response = await this.service.listQuestionsByCategory(category_id)
+		return res.json({ questions: response })
 	}
 
 	async createQuestion(req: Request, res: Response) {

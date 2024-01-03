@@ -8,6 +8,8 @@ interface QuestionRepository {
 	findQuestionById(question_id: string): Promise<QuestionEntity | null>
 	deleteQuestion(question_id: string): Promise<string>
 	listQuestionsByLevel(level: number): Promise<QuestionResponse[]>
+	findCategory(category_id: string): Promise<boolean>
+	listQuestionsByCategory(category_id: string): Promise<QuestionResponse[]>
 }
 
 export { QuestionRepository }

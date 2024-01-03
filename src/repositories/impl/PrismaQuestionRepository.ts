@@ -7,13 +7,43 @@ import { PrismaAlternativeRepository } from "./PrismaAlternativeRepository";
 
 class PrismaQuestionRepository extends PrismaAlternativeRepository implements QuestionRepository {
 
+	async listQuestionsByCategory(category_id: string): Promise<QuestionResponse[]> {
+		const response: QuestionResponse[] = await prismaClient.question.findMany({
+			where: {
+				category_id: category_id
+			},
+			select: {
+				id: true,
+				content: true,
+				level: true,
+				image_url: true,
+				category_id: true,
+				alternatives: {
+					select: {
+						id: true,
+						text: true,
+					}
+				}
+			}
+		})
+
+		return response
+	}
+
+	async findCategory(category_id: string): Promise<boolean> {
+		return await prismaClient.category.findUnique({
+			where: { id: category_id }
+		}) != null
+	}
+
 	async createQuestion(question: QuestionEntity): Promise<string> {
 		try {
 			const created = await prismaClient.question.create({
 				data: {
 					content: question.content,
 					level: question.level,
-					image_url: question.image_url
+					image_url: question.image_url,
+					category_id: question.category_id,
 				},
 				select: {
 					id: true
@@ -47,7 +77,8 @@ class PrismaQuestionRepository extends PrismaAlternativeRepository implements Qu
 				id: true,
 				content: true,
 				level: true,
-				image_url: true
+				image_url: true,
+				category_id: true,
 			}
 		})
 		return question
@@ -63,6 +94,7 @@ class PrismaQuestionRepository extends PrismaAlternativeRepository implements Qu
 				content: true,
 				level: true,
 				image_url: true,
+				category_id: true,
 				alternatives: {
 					select: {
 						id: true,
