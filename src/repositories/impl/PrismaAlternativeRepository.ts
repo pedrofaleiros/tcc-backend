@@ -15,7 +15,7 @@ class PrismaAlternativeRepository implements AlternativeRepository {
 				}
 			})
 		} catch (error) {
-			throw new Error("Error creating alternative");
+			throw new Error("Erro inesperado ao criar alternativa");
 		}
 	}
 
@@ -26,7 +26,7 @@ class PrismaAlternativeRepository implements AlternativeRepository {
 			}
 			return 'created'
 		} catch (error) {
-			throw new Error("Error adding alternatives");
+			throw new Error("Erro inesperado ao adicionar alternativa");
 		}
 	}
 }

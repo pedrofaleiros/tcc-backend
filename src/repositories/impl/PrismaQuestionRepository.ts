@@ -51,7 +51,7 @@ class PrismaQuestionRepository extends PrismaAlternativeRepository implements Qu
 			})
 			return created.id
 		} catch (error) {
-			throw new Error("Error creating question");
+			throw new Error("Erro inesperado criando questao");
 		}
 	}
 
@@ -64,7 +64,7 @@ class PrismaQuestionRepository extends PrismaAlternativeRepository implements Qu
 			})
 			return "deleted"
 		} catch (error) {
-			throw new Error("Error deleting question");
+			throw new Error("Error inesperado deletando questao");
 		}
 	}
 

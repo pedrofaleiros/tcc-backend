@@ -64,7 +64,7 @@ class QuestionServiceImpl implements QuestionService {
 
 	async listQuestionsByLevel(level: any): Promise<QuestionResponse[]> {
 		const numberLevel = parseInt(level)
-		if (numberLevel <= 0 || numberLevel > 10) throw new Error("Invalid level")
+		if (numberLevel <= 0 || numberLevel > 10) throw new Error("Nivel invalido")
 		const response = await this.repository.listQuestionsByLevel(numberLevel)
 		return response
 	}

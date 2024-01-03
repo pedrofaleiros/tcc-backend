@@ -32,7 +32,7 @@ class UserRepositoryImpl implements UserRepository {
 			}
 		})
 
-		if (user == null) throw new Error("User not found")
+		if (user == null) throw new Error("Usuario não encontrado")
 
 		return new UserEntity({
 			id: user?.id,
@@ -55,7 +55,7 @@ class UserRepositoryImpl implements UserRepository {
 			})
 			return "created"
 		} catch (error) {
-			throw new Error("Erro creating user");
+			throw new Error("Erro inesperado criando usuario");
 		}
 	}
 
@@ -73,7 +73,7 @@ class UserRepositoryImpl implements UserRepository {
 			})
 			return "updated"
 		} catch (error) {
-			throw new Error("Erro updating user");
+			throw new Error("Erro inesperado atualizando usuario");
 		}
 	}
 }

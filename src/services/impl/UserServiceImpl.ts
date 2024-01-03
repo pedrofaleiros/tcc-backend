@@ -17,7 +17,7 @@ class UserServiceImpl implements UserService {
 
 	async authUser(username: string | null, password: string | null): Promise<UserResponse> {
 		if (username == null || password == null) {
-			throw new Error("Invalid request");
+			throw new Error("Request invalido");
 		}
 
 		const user = await this.repository.getUserDetailsByUsername(username)
@@ -32,7 +32,7 @@ class UserServiceImpl implements UserService {
 				token: token,
 			})
 		}
-		throw new Error("Wrong password");
+		throw new Error("Senha incorreta");
 	}
 
 	async createUser(user: UserDTO): Promise<string> {
