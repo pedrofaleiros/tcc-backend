@@ -37,6 +37,10 @@ class UserServiceImpl implements UserService {
 
 	async createUser(user: UserDTO): Promise<string> {
 		validateUser(user)
+
+		if (await this.repository.findUserByUserName(user.username)) throw new Error('Username ja cadastrado')
+		if (await this.repository.findUserByEmail(user.email)) throw new Error('Email ja cadastrado')
+
 		const hashPassword = await hash(user.password, 8)
 		return await this.repository.createUser(user.toEntity(hashPassword))
 	}

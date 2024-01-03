@@ -17,12 +17,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 	if (err instanceof Error) {
 		if (err instanceof PrismaClientInitializationError || err.message.includes("prisma")) {
 			if (err.message.includes("make sure your database server is running")) {
-				return res.status(400).json({ error: "Error on Database" })
+				return res.status(400).json("Error on Database")
 			} else {
-				return res.status(400).json({ error: "Error on Prisma" })
+				return res.status(400).json("Error on Prisma")
 			}
 		}
-		return res.status(400).json({ error: err.message })
+		return res.status(400).json(err.message)
 	}
 
 	return res.status(500).json({
