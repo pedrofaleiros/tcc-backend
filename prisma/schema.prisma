@@ -39,6 +39,13 @@ model AnswerQuestion {
   @@map("answerquestions")
 }
 
+model Category {
+  id   String @id @default(uuid())
+  name String
+
+  questions Question[]
+}
+
 model Question {
   id String @id @default(uuid())
 
@@ -48,6 +55,9 @@ model Question {
   alternatives Alternative[]
 
   answered_questions AnswerQuestion[]
+
+  category    Category? @relation(fields: [category_id], references: [id])
+  category_id String?
 
   @@map("questions")
 }
