@@ -22,6 +22,8 @@ router.delete('/question', isAuthenticated, questionController.deleteQuestion)
 
 router.post('/answerQuestion', isAuthenticated, answerQuestionController.answerQuestion)
 router.get('/answeredQuestions', isAuthenticated, answerQuestionController.getUserAnsweredQuestions)
+router.get('/answeredQuestions/level', isAuthenticated, answerQuestionController.getUserAnsweredQuestionsByLevel)
+router.get('/answeredQuestions/category', isAuthenticated, answerQuestionController.getUserAnsweredQuestionsByCategory)
 
 router.post('/category', isAuthenticated, categoryController.create)
 router.get('/category', isAuthenticated, categoryController.list)

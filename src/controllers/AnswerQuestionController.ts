@@ -11,6 +11,8 @@ class AnswerQuestionController {
 		this.service = new AnswerQuestionServiceImpl()
 		this.answerQuestion = this.answerQuestion.bind(this)
 		this.getUserAnsweredQuestions = this.getUserAnsweredQuestions.bind(this)
+		this.getUserAnsweredQuestionsByLevel = this.getUserAnsweredQuestionsByLevel.bind(this)
+		this.getUserAnsweredQuestionsByCategory = this.getUserAnsweredQuestionsByCategory.bind(this)
 	}
 
 	async answerQuestion(req: Request, res: Response) {
