@@ -32,9 +32,9 @@ model AnswerQuestion {
   question_id    String
   alternative_id String
 
-  user        User        @relation(fields: [user_id], references: [id])
-  question    Question    @relation(fields: [question_id], references: [id])
-  alternative Alternative @relation(fields: [alternative_id], references: [id])
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  question    Question    @relation(fields: [question_id], references: [id], onDelete: Cascade)
+  alternative Alternative @relation(fields: [alternative_id], references: [id], onDelete: Cascade)
 
   @@map("answerquestions")
 }
@@ -56,7 +56,7 @@ model Question {
 
   answered_questions AnswerQuestion[]
 
-  category    Category? @relation(fields: [category_id], references: [id])
+  category    Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)
   category_id String?
 
   @@map("questions")
@@ -67,7 +67,7 @@ model Alternative {
   text        String
   value       Boolean
   question_id String
-  question    Question @relation(fields: [question_id], references: [id])
+  question    Question @relation(fields: [question_id], references: [id], onDelete: Cascade)
 
   answered_questions AnswerQuestion[]
 
