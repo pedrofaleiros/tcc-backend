@@ -1,6 +1,6 @@
 interface CategoryService {
-	createCategory(category_name: string): Promise<string>
-	deleteCategory(category_id: string): Promise<string>
+	createCategory(category_name: any): Promise<void>
+	deleteCategory(category_id: any): Promise<void>
 	listCategories(): Promise<object[]>
 }
 

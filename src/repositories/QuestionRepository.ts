@@ -4,11 +4,14 @@ import { QuestionResponse } from "../models/response/QuestionResponse"
 
 interface QuestionRepository {
 	createQuestion(question: QuestionEntity): Promise<string>
-	addAlternatives(alternatives: AlternativeEntity[]): Promise<string>
-	findQuestionById(question_id: string): Promise<QuestionEntity | null>
-	deleteQuestion(question_id: string): Promise<string>
-	listQuestionsByLevel(level: number): Promise<QuestionResponse[]>
+	deleteQuestion(question_id: string): Promise<void>
+
+	addAlternatives(alternatives: AlternativeEntity[]): Promise<void>
+
+	findQuestionById(question_id: string): Promise<QuestionResponse | null>
 	findCategory(category_id: string): Promise<boolean>
+
+	listQuestionsByLevel(level: number): Promise<QuestionResponse[]>
 	listQuestionsByCategory(category_id: string): Promise<QuestionResponse[]>
 }
 

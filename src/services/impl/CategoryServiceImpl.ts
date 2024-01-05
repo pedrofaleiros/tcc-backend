@@ -10,22 +10,30 @@ class CategoryServiceImpl implements CategoryService {
 		this.repository = new PrismaCategoryRepository()
 	}
 
-	async createCategory(category_name: string): Promise<string> {
-		if (category_name == "" || category_name.length < 3 || category_name.length > 64) {
+	async createCategory(category_name: any): Promise<void> {
+		if (category_name == null || category_name == undefined) throw new Error("Nome invalido");
+
+		const name = category_name as string
+		if (name == "" || name.length < 3 || name.length > 64) {
 			throw new Error("Nome invalido")
 		}
-		return await this.repository.createCategory(category_name);
+
+		await this.repository.createCategory(name);
 	}
 
-	async deleteCategory(category_id: string): Promise<string> {
-		if (!this.repository.findCategory(category_id)) {
+	async deleteCategory(category_id: any): Promise<void> {
+		if (category_id == null || category_id == undefined) throw new Error("Id invalido");
+
+		const id = category_id as string
+
+		if (!await this.repository.findCategory(id)) {
 			throw new Error("Categoria nao encontrada")
 		}
-		return this.repository.deleteCategory(category_id)
+		await this.repository.deleteCategory(id)
 	}
 
 	async listCategories(): Promise<object[]> {
-		return this.repository.listCategories()
+		return await this.repository.listCategories()
 	}
 
 }

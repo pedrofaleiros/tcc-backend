@@ -5,28 +5,24 @@ import { AlternativeRepository } from "../AlternativeRepository";
 
 class PrismaAlternativeRepository implements AlternativeRepository {
 
-	async createAlternative(alternative: AlternativeEntity): Promise<void> {
-		try {
-			await prismaClient.alternative.create({
-				data: {
-					text: alternative.text,
-					value: alternative.value,
-					question_id: alternative.question_id
-				}
-			})
-		} catch (error) {
-			throw new Error("Erro inesperado ao criar alternativa");
-		}
+	async findAlternative(alternative_id: string): Promise<boolean> {
+		const res = await prismaClient.alternative.findUnique({ where: { id: alternative_id } })
+		return res != null
 	}
 
-	async addAlternatives(alternatives: AlternativeEntity[]): Promise<string> {
-		try {
-			for (let i = 0; i < alternatives.length; i++) {
-				await this.createAlternative(alternatives[i])
+	private async createAlternative(alternative: AlternativeEntity): Promise<void> {
+		await prismaClient.alternative.create({
+			data: {
+				text: alternative.text,
+				value: alternative.value,
+				question_id: alternative.question_id,
 			}
-			return 'created'
-		} catch (error) {
-			throw new Error("Erro inesperado ao adicionar alternativa");
+		})
+	}
+
+	async addAlternatives(alternatives: AlternativeEntity[]): Promise<void> {
+		for (let i = 0; i < alternatives.length; i++) {
+			await this.createAlternative(alternatives[i])
 		}
 	}
 }

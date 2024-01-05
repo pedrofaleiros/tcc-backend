@@ -28,11 +28,14 @@ class AnswerQuestionDTO {
 		});
 	}
 
-	toEntity(): AnswerQuestionEntity {
+	toEntity(id: string | null, correct: boolean, tries: number): AnswerQuestionEntity {
 		return new AnswerQuestionEntity({
+			id: id,
 			user_id: this.user_id,
 			question_id: this.question_id,
 			alternative_id: this.alternative_id,
+			correct: correct,
+			tries: tries,
 		})
 	}
 }

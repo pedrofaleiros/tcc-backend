@@ -11,6 +11,7 @@ class QuestionController {
 		this.listQuestionsByLevel = this.listQuestionsByLevel.bind(this)
 		this.listQuestionsByCategory = this.listQuestionsByCategory.bind(this)
 		this.createQuestion = this.createQuestion.bind(this)
+		this.deleteQuestion = this.deleteQuestion.bind(this)
 	}
 
 	async listQuestionsByLevel(req: Request, res: Response) {
@@ -27,8 +28,15 @@ class QuestionController {
 
 	async createQuestion(req: Request, res: Response) {
 		const question = QuestionDTO.fromRequestBody(req.body)
-		const response = await this.service.createQuestion(question)
-		return res.json({ status: response })
+		await this.service.createQuestion(question)
+		return res.json({ status: 'created' })
 	}
+
+	async deleteQuestion(req: Request, res: Response) {
+		const question_id = req.query.question_id as string;
+		await this.service.deleteQuestion(question_id);
+		return res.json({ status: 'deleted' })
+	}
+
 }
 export { QuestionController }

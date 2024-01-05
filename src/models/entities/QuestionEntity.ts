@@ -1,4 +1,3 @@
-import { AlternativeEntity } from "./AlternativeEntity"
 
 interface Params {
 	id: string | null

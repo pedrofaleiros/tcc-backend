@@ -17,17 +17,28 @@ class AnswerQuestionController {
 		const user_id = req.user_id
 		const answerQuestion = AnswerQuestionDTO.fromRequestBody(req.body, user_id)
 		const response = await this.service.answerQuestion(answerQuestion)
-		return res.json({ response: response })
+		return res.json({ answer: response })
 	}
 
 	async getUserAnsweredQuestions(req: Request, res: Response) {
 		const user_id = req.user_id
 		const response = await this.service.listUserAnsweredQuestions(user_id)
-		return res.json({ response: response })
+		return res.json(response)
 	}
 
-	//TODO: getUserCorrectAnsweredQuestions
+	async getUserAnsweredQuestionsByLevel(req: Request, res: Response) {
+		const user_id = req.user_id
+		const level = req.query.level;
+		const response = await this.service.listUserAnsweredQuestionsByLevel(user_id, level)
+		return res.json(response)
+	}
 
+	async getUserAnsweredQuestionsByCategory(req: Request, res: Response) {
+		const user_id = req.user_id
+		const category_id = req.query.category_id
+		const response = await this.service.listUserAnsweredQuestionsByCategory(user_id, category_id)
+		return res.json(response)
+	}
 }
 
 export { AnswerQuestionController }

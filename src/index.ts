@@ -19,6 +19,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 			if (err.message.includes("make sure your database server is running")) {
 				return res.status(400).json("Error on Database")
 			} else {
+				console.log(err.message)
 				return res.status(400).json("Error on Prisma")
 			}
 		}

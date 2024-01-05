@@ -14,14 +14,14 @@ class CategoryController {
 
 	async create(req: Request, res: Response) {
 		const name = req.body.name as string
-		const response = await this.service.createCategory(name)
-		return res.json({ status: response })
+		await this.service.createCategory(name)
+		return res.json({ status: 'created' })
 	}
 
 	async delete(req: Request, res: Response) {
 		const id = req.query.category_id as string
-		const response = await this.service.deleteCategory(id)
-		return res.json({ status: response })
+		await this.service.deleteCategory(id)
+		return res.json({ status: 'deleted' })
 	}
 
 	async list(req: Request, res: Response) {
