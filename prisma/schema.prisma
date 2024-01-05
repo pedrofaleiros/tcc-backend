@@ -24,7 +24,7 @@ model User {
 }
 
 model AnswerQuestion {
-  id      String  @id
+  id      String  @id @default(uuid())
   tries   Int
   correct Boolean
 
