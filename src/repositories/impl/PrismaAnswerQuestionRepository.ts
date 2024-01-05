@@ -85,6 +85,7 @@ class PrismaAnswerQuestionRepository implements AnswerQuestionRepository {
 				image_url: true,
 				content: true,
 				level: true,
+				category_id: true,
 				alternatives: {
 					select: {
 						id: true,

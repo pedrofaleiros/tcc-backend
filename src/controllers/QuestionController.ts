@@ -17,13 +17,19 @@ class QuestionController {
 	async listQuestionsByLevel(req: Request, res: Response) {
 		const level = req.query.level
 		const response = await this.service.listQuestionsByLevel(level)
-		return res.json({ questions: response })
+		return res.json({
+			length: response.length,
+			data: response
+		})
 	}
 
 	async listQuestionsByCategory(req: Request, res: Response) {
 		const category_id = req.query.category_id as string
 		const response = await this.service.listQuestionsByCategory(category_id)
-		return res.json({ questions: response })
+		return res.json({
+			length: response.length,
+			data: response
+		})
 	}
 
 	async createQuestion(req: Request, res: Response) {

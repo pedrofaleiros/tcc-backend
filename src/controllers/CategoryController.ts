@@ -26,7 +26,10 @@ class CategoryController {
 
 	async list(req: Request, res: Response) {
 		const response = await this.service.listCategories()
-		return res.json({ categories: response })
+		return res.json({
+			length: response.length,
+			data: response,
+		})
 	}
 }
 

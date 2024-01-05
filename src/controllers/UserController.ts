@@ -11,7 +11,6 @@ class UserController {
 		this.service = new UserServiceImpl()
 		this.createUser = this.createUser.bind(this)
 		this.authUser = this.authUser.bind(this)
-		this.listAllUsers = this.listAllUsers.bind(this)
 	}
 
 	async createUser(req: Request, res: Response) {
@@ -28,11 +27,6 @@ class UserController {
 		const response = await this.service.authUser(username, password)
 
 		return res.json(response)
-	}
-
-	async listAllUsers(req: Request, res: Response) {
-		const users = await this.service.listUsers()
-		return res.json({ users: users })
 	}
 }
 

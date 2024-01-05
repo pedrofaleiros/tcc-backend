@@ -6,6 +6,7 @@ interface Params {
 	content: string
 	level: number
 	alternatives: Array<AlternativeResponse> | null
+	category_id: string | null
 }
 
 class QuestionResponse {
@@ -14,6 +15,7 @@ class QuestionResponse {
 	content: string
 	level: number
 	alternatives: Array<AlternativeResponse>
+	category_id: string | null
 
 	constructor(params: Params) {
 		this.id = params.id
@@ -21,6 +23,7 @@ class QuestionResponse {
 		this.content = params.content
 		this.level = params.level
 		this.alternatives = params.alternatives == null ? [] : params.alternatives
+		this.category_id = params.category_id
 	}
 }
 
