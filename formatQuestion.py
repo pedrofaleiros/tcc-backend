@@ -17,6 +17,7 @@ def format_question():
         alternatives.append({"text": text, "value": value})
 
     question = {
+        "category_id":None,
         "content": content,
         "level": level,
         "alternatives": alternatives
