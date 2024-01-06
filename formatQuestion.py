@@ -1,9 +1,14 @@
 import json
 
+# def save_question_to_json(question, filename="question.json"):
+#     with open(filename, 'w') as file:
+#         json.dump(question, file, indent=4)
+#     print(f"Questão salva em '{filename}'.")
 def save_question_to_json(question, filename="question.json"):
-    with open(filename, 'w') as file:
-        json.dump(question, file, indent=4)
+    with open(filename, 'w', encoding='utf-8') as file:
+        json.dump(question, file, ensure_ascii=False, indent=4)
     print(f"Questão salva em '{filename}'.")
+
 
 def format_question():
     content = input("\n\033[31m Enunciado da questão: \033[0m")
