@@ -13,6 +13,13 @@ class PrismaQuestionRepository implements QuestionRepository {
 		this.alternativeRepository = new PrismaAlternativeRepository()
 	}
 
+	async updateQuestionCategory(question_id: string, category_id: string): Promise<void> {
+		await prismaClient.question.update({
+			where: { id: question_id },
+			data: { category_id: category_id }
+		})
+	}
+
 	async addAlternatives(alternatives: AlternativeEntity[]): Promise<void> {
 		await this.alternativeRepository.addAlternatives(alternatives)
 	}
@@ -46,6 +53,12 @@ class PrismaQuestionRepository implements QuestionRepository {
 	private async deleteAlternatives(question_id: string): Promise<void> {
 		await prismaClient.alternative.deleteMany({
 			where: { question_id: question_id }
+		})
+	}
+
+	async listQuestions(): Promise<QuestionResponse[]> {
+		return await prismaClient.question.findMany({
+			select: this.questionResponseInterface,
 		})
 	}
 

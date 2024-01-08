@@ -13,9 +13,21 @@ class QuestionServiceImpl implements QuestionService {
 		this.repository = new PrismaQuestionRepository()
 	}
 
+	async updateQuestionCategory(question_id: any, category_id: any): Promise<void> {
+		if (question_id == null || question_id == undefined || question_id == "") throw new Error("Questao invalida");
+		if (category_id == null || category_id == undefined || category_id == "") throw new Error("Categoria invalida");
+		if (!await this.repository.findCategory(category_id)) throw new Error("Categoria invalida");
+
+		await this.repository.updateQuestionCategory(question_id, category_id);
+	}
+
 	async listQuestions(category_id: any, level: any): Promise<QuestionResponse[]> {
 		if (category_id == null || category_id == undefined) {
-			return await this.listQuestionsByLevel(level);
+			if (level == undefined || level == null) {
+				return await this.repository.listQuestions();
+			} else {
+				return await this.listQuestionsByLevel(level);
+			}
 		} else {
 			return await this.listQuestionsByCategory(category_id);
 		}

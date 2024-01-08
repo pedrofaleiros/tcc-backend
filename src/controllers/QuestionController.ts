@@ -8,35 +8,23 @@ class QuestionController {
 	private service: QuestionService
 	constructor() {
 		this.service = new QuestionServiceImpl()
-		this.listQuestionsByLevel = this.listQuestionsByLevel.bind(this)
-		this.listQuestionsByCategory = this.listQuestionsByCategory.bind(this)
 		this.createQuestion = this.createQuestion.bind(this)
 		this.deleteQuestion = this.deleteQuestion.bind(this)
 		this.listQuestions = this.listQuestions.bind(this)
+		this.updateQuestionCategory = this.updateQuestionCategory.bind(this)
+	}
+
+	async updateQuestionCategory(req: Request, res: Response) {
+		const category_id = req.query.category_id as string
+		const question_id = req.query.question_id as string
+		await this.service.updateQuestionCategory(question_id, category_id)
+		return res.json({ status: 'atualizado' })
 	}
 
 	async listQuestions(req: Request, res: Response) {
 		const level = req.query.level
 		const category_id = req.query.category_id as string
 		const response = await this.service.listQuestions(category_id, level);
-		return res.json({
-			length: response.length,
-			data: response
-		})
-	}
-
-	async listQuestionsByLevel(req: Request, res: Response) {
-		const level = req.query.level
-		const response = await this.service.listQuestionsByLevel(level)
-		return res.json({
-			length: response.length,
-			data: response
-		})
-	}
-
-	async listQuestionsByCategory(req: Request, res: Response) {
-		const category_id = req.query.category_id as string
-		const response = await this.service.listQuestionsByCategory(category_id)
 		return res.json({
 			length: response.length,
 			data: response
