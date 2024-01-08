@@ -7,6 +7,7 @@ interface QuestionService {
 	deleteQuestion(question_id: any): Promise<void>
 	listQuestionsByLevel(level: any): Promise<Array<QuestionResponse>>
 	listQuestionsByCategory(category_id: any): Promise<Array<QuestionResponse>>
+	listQuestions(category_id: any, level: any): Promise<Array<QuestionResponse>>
 }
 
 export { QuestionService }

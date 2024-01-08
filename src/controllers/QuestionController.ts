@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, response } from "express";
 import { QuestionService } from "../services/QuestionService";
 import { QuestionServiceImpl } from "../services/impl/QuestionServiceImpl";
 import { QuestionDTO } from "../models/dtos/QuestionDTO";
@@ -12,6 +12,17 @@ class QuestionController {
 		this.listQuestionsByCategory = this.listQuestionsByCategory.bind(this)
 		this.createQuestion = this.createQuestion.bind(this)
 		this.deleteQuestion = this.deleteQuestion.bind(this)
+		this.listQuestions = this.listQuestions.bind(this)
+	}
+
+	async listQuestions(req: Request, res: Response) {
+		const level = req.query.level
+		const category_id = req.query.category_id as string
+		const response = await this.service.listQuestions(category_id, level);
+		return res.json({
+			length: response.length,
+			data: response
+		})
 	}
 
 	async listQuestionsByLevel(req: Request, res: Response) {

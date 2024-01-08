@@ -13,6 +13,14 @@ class QuestionServiceImpl implements QuestionService {
 		this.repository = new PrismaQuestionRepository()
 	}
 
+	async listQuestions(category_id: any, level: any): Promise<QuestionResponse[]> {
+		if (category_id == null || category_id == undefined) {
+			return await this.listQuestionsByLevel(level);
+		} else {
+			return await this.listQuestionsByCategory(category_id);
+		}
+	}
+
 	async listQuestionsByCategory(category_id: any): Promise<QuestionResponse[]> {
 		if (category_id == null || category_id == undefined) throw new Error("Id invalido")
 
@@ -22,7 +30,7 @@ class QuestionServiceImpl implements QuestionService {
 	}
 
 	async createQuestion(question: QuestionDTO): Promise<void> {
-		if (question.content.length < 3 || question.content.length > 100) throw new Error("Conteudo deve ter entre 3 e 100 caracteres")
+		if (question.content.length < 3 || question.content.length > 512) throw new Error("Conteudo deve ter entre 3 e 512 caracteres")
 		if (question.level < 0 || question.level > 10) throw new Error("Nivel deve estar entre 1 e 10")
 		if (question.category_id != null) {
 			if (!await this.repository.findCategory(question.category_id || "")) throw new Error("Categoria invalida")
