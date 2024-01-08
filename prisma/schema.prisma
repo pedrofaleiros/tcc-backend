@@ -18,58 +18,72 @@ model User {
   email    String @unique
   password String
 
-  answered_questions AnswerQuestion[]
+  userQuestions UserQuestion[]
 
   @@map("users")
 }
 
-model AnswerQuestion {
-  id      String  @id @default(uuid())
-  tries   Int
-  correct Boolean
+model UserQuestion {
+  id String @id @default(uuid())
 
-  user_id        String
-  question_id    String
-  alternative_id String
+  tries         Int
+  correct       Boolean
+  userId        String
+  questionId    String
+  alternativeId String
 
-  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  question    Question    @relation(fields: [question_id], references: [id], onDelete: Cascade)
-  alternative Alternative @relation(fields: [alternative_id], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question    Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  alternative Alternative @relation(fields: [alternativeId], references: [id], onDelete: Cascade)
 
-  @@map("answerquestions")
+  @@map("userquestions")
 }
 
-model Category {
-  id   String @id @default(uuid())
+model Subject {
+  id String @id @default(uuid())
+
   name String
 
-  questions Question[]
+  questionSubjects QuestionSubject[]
+
+  @@map("subjects")
+}
+
+model QuestionSubject {
+  id String @id @default(uuid())
+
+  subjectId  String?
+  questionId String?
+
+  Subject  Subject?  @relation(fields: [subjectId], references: [id])
+  Question Question? @relation(fields: [questionId], references: [id])
+
+  @@map("questionsubject")
 }
 
 model Question {
   id String @id @default(uuid())
 
-  image_url    String?
-  content      String
-  level        Int
-  alternatives Alternative[]
-
-  answered_questions AnswerQuestion[]
-
-  category    Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)
-  category_id String?
+  image_url        String?
+  content          String
+  level            Int
+  alternatives     Alternative[]
+  userQuestions    UserQuestion[]
+  questionSubjects QuestionSubject[]
 
   @@map("questions")
 }
 
 model Alternative {
-  id          String   @id @default(uuid())
+  id String @id @default(uuid())
+
   text        String
   value       Boolean
   question_id String
-  question    Question @relation(fields: [question_id], references: [id], onDelete: Cascade)
 
-  answered_questions AnswerQuestion[]
+  question Question @relation(fields: [question_id], references: [id], onDelete: Cascade)
+
+  answered_questions UserQuestion[]
 
   @@map("alternatives")
 }
