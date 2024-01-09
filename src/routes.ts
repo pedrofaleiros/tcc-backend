@@ -20,7 +20,7 @@ router.get('/subject', isAuthenticated, subjectController.listSubjects)
 // list questions, subjectId?, level?
 router.get('/questions', isAuthenticated, questionController.listQuestions)
 
-router.get('/question', isAuthenticated) // get one question details X
+// router.get('/question', isAuthenticated) // get one question details
 
 // answer a question
 router.post('/answer', isAuthenticated, answerController.answerQuestion)
@@ -36,9 +36,8 @@ router.post('/question', isAuthenticated, questionController.createQuestion)
 // delete question
 router.delete('/question', isAuthenticated, questionController.deleteQuestion)
 
-router.post('/question/subject', isAuthenticated) // add question to subject X
-router.delete('/question/subject', isAuthenticated) // delete question subject X
-//DEV --------------------------------------------------------
+// router.post('/question/subject', isAuthenticated) // add question to subject X
+// router.delete('/question/subject', isAuthenticated) // delete question subject X
 
 router.get('/', (_, res) => res.json({ status: "Ok" }))
 
