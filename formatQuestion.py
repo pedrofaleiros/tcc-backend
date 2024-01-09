@@ -12,7 +12,7 @@ def save_question_to_json(question, filename="question.json"):
 
 def format_question():
     content = input("\n\033[31m Enunciado da questão: \033[0m")
-    category_id = input("\033[31m Id da categoria: \033[0m")
+    subjectId = input("\033[31m Id da categoria: \033[0m")
     level = int(input("\033[31m Nível da questão: \033[0m"))
     num_alternatives = int(input("\033[31m Numero de alternativas: \033[0m"))
 
@@ -23,10 +23,12 @@ def format_question():
         alternatives.append({"text": text, "value": value})
 
     question = {
-        "category_id":category_id,
         "content": content,
         "level": level,
-        "alternatives": alternatives
+        "alternatives": alternatives,
+        "subjects": [
+            {"id":subjectId}
+        ]
     }
 
     save_question_to_json(question)

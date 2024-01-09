@@ -1,34 +1,44 @@
 import { Router } from "express";
 import { UserController } from "./controllers/UserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
+import { SubjectController } from "./controllers/SubjectController";
 import { QuestionController } from "./controllers/QuestionController";
-import { AnswerQuestionController } from "./controllers/AnswerQuestionController";
-import { CategoryController } from "./controllers/CategoryController";
+import { AnswerController } from "./controllers/AnswerController";
 
 const userController = new UserController()
+const subjectController = new SubjectController()
 const questionController = new QuestionController()
-const answerQuestionController = new AnswerQuestionController()
-const categoryController = new CategoryController()
+const answerController = new AnswerController()
 
 const router = Router()
 
 router.post('/user', userController.createUser)
 router.post('/auth', userController.authUser)
 
-router.post('/question', isAuthenticated, questionController.createQuestion)
+// get/search subjects
+router.get('/subject', isAuthenticated, subjectController.listSubjects)
+// list questions, subjectId?, level?
 router.get('/questions', isAuthenticated, questionController.listQuestions)
+
+// router.get('/question', isAuthenticated) // get one question details
+
+// answer a question
+router.post('/answer', isAuthenticated, answerController.answerQuestion)
+
+//DEV --------------------------------------------------------
+// create subject
+router.post('/subject', isAuthenticated, subjectController.createSubject)
+// delete subject
+router.delete('/subject', isAuthenticated, subjectController.deleteSubject)
+
+// create question
+router.post('/question', isAuthenticated, questionController.createQuestion)
+// delete question
 router.delete('/question', isAuthenticated, questionController.deleteQuestion)
-router.patch('/questionCategory', isAuthenticated, questionController.updateQuestionCategory)
 
-router.post('/answerQuestion', isAuthenticated, answerQuestionController.answerQuestion)
-router.get('/answeredQuestions', isAuthenticated, answerQuestionController.getUserAnsweredQuestions)
-router.get('/answeredQuestions/level', isAuthenticated, answerQuestionController.getUserAnsweredQuestionsByLevel)
-router.get('/answeredQuestions/category', isAuthenticated, answerQuestionController.getUserAnsweredQuestionsByCategory)
+// router.post('/question/subject', isAuthenticated) // add question to subject X
+// router.delete('/question/subject', isAuthenticated) // delete question subject X
 
-router.post('/category', isAuthenticated, categoryController.create)
-router.get('/category', isAuthenticated, categoryController.list)
-router.delete('/category', isAuthenticated, categoryController.delete)
-
-router.get('/', (req, res) => res.json({ status: "Ok" }))
+router.get('/', (_, res) => res.json({ status: "Ok" }))
 
 export { router }

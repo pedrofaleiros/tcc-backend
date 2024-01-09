@@ -6,7 +6,7 @@ interface Params {
 	content: string
 	level: number
 	alternatives: AlternativeDTO[]
-	category_id: string | null
+	subjectsId: string[]
 }
 
 class QuestionDTO {
@@ -14,14 +14,14 @@ class QuestionDTO {
 	content: string
 	level: number
 	alternatives: AlternativeDTO[]
-	category_id: string | null
+	subjectsId: string[]
 
 	constructor(params: Params) {
 		this.image_url = params.image_url
 		this.content = params.content
 		this.level = params.level
 		this.alternatives = params.alternatives
-		this.category_id = params.category_id
+		this.subjectsId = params.subjectsId
 	}
 
 	toEntity(): QuestionEntity {
@@ -30,7 +30,6 @@ class QuestionDTO {
 			image_url: this.image_url,
 			content: this.content,
 			level: this.level,
-			category_id: this.category_id,
 		})
 	}
 
@@ -38,26 +37,47 @@ class QuestionDTO {
 		if (!reqBody.content) throw new Error('Content is required')
 		if (!reqBody.level) throw new Error('Level is required')
 
-		const alternatives: AlternativeDTO[] = []
-
-		const list = reqBody.alternatives as Array<{ text: string, value: boolean }>
-		list.forEach((e) => {
-			let aux = new AlternativeDTO({
-				text: e.text,
-				value: e.value,
-				question_id: null
-			})
-			alternatives.push(aux)
-		})
+		const alternatives: AlternativeDTO[] = getAlternatives(reqBody)
+		const subjects: string[] = getSubjects(reqBody)
 
 		return new QuestionDTO({
 			content: reqBody.content,
 			level: parseInt(reqBody.level),
-			image_url: reqBody.image_url ? reqBody.image_url as string : null,
+			image_url: reqBody.imageUrl,
 			alternatives: alternatives,
-			category_id: reqBody.category_id,
+			subjectsId: subjects,
 		});
 	}
 }
 
 export { QuestionDTO }
+
+function getAlternatives(reqBody: any) {
+	if (reqBody.alternatives == undefined || reqBody.alternatives == null) throw new Error("Alternativas invalidas")
+
+	const alternatives: AlternativeDTO[] = []
+	try {
+		const list = reqBody.alternatives as Array<{ text: string; value: boolean }>
+		list.forEach((e) => {
+			alternatives.push(AlternativeDTO.fromRequestBody(e))
+		})
+	} catch (error) {
+		throw new Error("Alternativas invalida")
+	}
+	return alternatives
+}
+
+function getSubjects(reqBody: any) {
+	const subjects: string[] = []
+	if (reqBody.subjects != undefined && reqBody.subjects != null) {
+		try {
+			const list2 = reqBody.subjects as Array<{ id: string }>
+			list2.forEach((e) => {
+				subjects.push(e.id)
+			})
+		} catch (error) {
+			throw new Error("subjects invalido")
+		}
+	}
+	return subjects
+}
