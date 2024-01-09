@@ -20,10 +20,10 @@ class AlternativeEntity {
 		this.question_id = params.question_id
 	}
 
-	static fromListDTO(alternatives: AlternativeDTO[], question_id: string): AlternativeEntity[] {
+	static fromListDTO(alternatives: AlternativeDTO[], questionId: string): AlternativeEntity[] {
 		const entities: AlternativeEntity[] = []
 		alternatives.forEach((alternative) => {
-			entities.push(alternative.toEntity(question_id))
+			entities.push(alternative.toEntity(questionId))
 		})
 		return entities
 	}

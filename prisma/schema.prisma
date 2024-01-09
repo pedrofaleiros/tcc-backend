@@ -64,7 +64,7 @@ model QuestionSubject {
 model Question {
   id String @id @default(uuid())
 
-  image_url        String?
+  imageUrl         String?
   content          String
   level            Int
   alternatives     Alternative[]
@@ -77,13 +77,13 @@ model Question {
 model Alternative {
   id String @id @default(uuid())
 
-  text        String
-  value       Boolean
-  question_id String
+  text       String
+  value      Boolean
+  questionId String
 
-  question Question @relation(fields: [question_id], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
-  answered_questions UserQuestion[]
+  userQuestions UserQuestion[]
 
   @@map("alternatives")
 }
